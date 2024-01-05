@@ -5,11 +5,15 @@ import Header from "@/components/Header"
 import PokemonCard from "@/components/PokemonsCard"
 import { PokemonsProps } from "@/types/pokemonProp"
 import { useQuery } from "@tanstack/react-query"
+import { useEffect, useState } from "react"
 
+
+interface StateProsp{
+  
+}
 
 export default function Home() {
-
-
+  const [handleChangeInput, setHandleChangeInput] = useState('');
   const { data, isFetching} = useQuery<PokemonsProps[]>({
     queryKey:['pokemons'],
     queryFn: () => getPokemons(),
@@ -17,15 +21,20 @@ export default function Home() {
     staleTime: 5 * 6000
   })
 
+  const filterPokemons = data?.filter((pokemons) => pokemons.name.toLowerCase().includes(handleChangeInput.toLowerCase()))
+
   return (
     <>
-      <Header/>
-      <div className="flex flex-wrap gap-4 text-center mt-8">
+      <Header setChange={setHandleChangeInput} changeValue={handleChangeInput}/>
+      <div className="flex flex-wrap justify-center gap-4 text-center mt-8">
           {isFetching && <p>Carregando...</p>}
           { 
-          data?.map( repo => {
+          filterPokemons?.map( poke => {
+
+            const getType = poke.types[0].type
+
             return(
-              <PokemonCard id={repo.id} order={repo.order} name={repo.name} image={repo.sprites.front_default} type={repo.types.type} height={repo.height} weight={repo.weight}/>
+              <PokemonCard key={poke.id} id={poke.id} order={poke.order} name={poke.name} image={poke.sprites.front_default} type={getType.name} height={poke.height} weight={poke.weight}/>
             )})}
       </div>
     </>
