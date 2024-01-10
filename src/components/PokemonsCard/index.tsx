@@ -1,7 +1,9 @@
 import { PokemonsProps } from "@/types/pokemonProp";
+import { useRouter } from "next/navigation";
 
 
 export default function PokemonCard({ name, id, order, image, weight, height, type}:PokemonsProps){
+    const router = useRouter();
 
     const cardStyle = {
         border: '3px solid',
@@ -43,8 +45,12 @@ export default function PokemonCard({ name, id, order, image, weight, height, ty
         backgroundColor.background = 'gray'
     }
 
+    function handleAboutPokemons(id: number){
+        router.push(`/${id}`)
+    }
+
     return(
-        <div onClick={() => console.log('Clickou')} style={cardStyle} className="relative bg-gradient-to-t from-black to-gray-800 flex flex-col justify-around cursor-pointer border p-6 mr-4 ml-4 mb-5 w-[300px] h-[500px] rounded-lg hover:p-6 hover:transition-all" key={id}>
+        <div onClick={() =>  handleAboutPokemons(id)} style={cardStyle} className="relative bg-gradient-to-t from-black to-gray-800 flex flex-col justify-around cursor-pointer border p-6 mr-4 ml-4 mb-5 w-[300px] h-[500px] rounded-lg hover:p-6 hover:transition-all" key={id}>
             <div className="flex justify-between items-center">
                 <h1 className="text-white">#00{order}</h1>
                 <div style={backgroundColor} className="absolute right-3 rounded-full"></div>

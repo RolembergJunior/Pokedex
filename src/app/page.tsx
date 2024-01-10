@@ -1,16 +1,11 @@
 'use client'
 
-import { getPokemons } from "@/api/pokemons"
-import Header from "@/components/Header"
-import PokemonCard from "@/components/PokemonsCard"
-import { PokemonsProps } from "@/types/pokemonProp"
-import { useQuery } from "@tanstack/react-query"
-import { useEffect, useState } from "react"
-
-
-interface StateProsp{
-  
-}
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import Header from "@/components/Header";
+import PokemonCard from "@/components/PokemonsCard";
+import { getPokemons } from "@/api/pokemons";
+import { PokemonsProps } from "@/types/pokemonProp";
 
 export default function Home() {
   const [handleChangeInput, setHandleChangeInput] = useState('');
