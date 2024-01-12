@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <Header setChange={setHandleChangeInput} changeValue={handleChangeInput}/>
+      <Header setChange={setHandleChangeInput} changeValue={handleChangeInput} dataPokemons={data}/>
       <div className="flex flex-wrap justify-center gap-4 text-center mt-8">
           {isFetching && <p>Carregando...</p>}
           { 

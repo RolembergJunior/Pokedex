@@ -45,7 +45,7 @@ export default function PokemonCard({ name, id, order, image, weight, height, ty
         backgroundColor.background = 'gray'
     }
 
-    function handleAboutPokemons(id: number){
+    function handleAboutPokemons(id: string){
         router.push(`/${id}`)
     }
 
