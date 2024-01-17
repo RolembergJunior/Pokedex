@@ -1,5 +1,5 @@
-import { PokemonsProps } from "@/types/pokemonProp";
 import { useRouter } from "next/navigation";
+import { PokemonsProps } from "@/types/pokemonProp";
 
 
 interface PokemonTypes{

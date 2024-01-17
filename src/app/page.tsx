@@ -16,9 +16,9 @@ export default function Home() {
     staleTime: 5 * 6000
   })
 
-    const filterPokemons = data?.filter((pokemons) => pokemons.name.toLowerCase().includes(handleChangeInput.toLowerCase()))
+    const scearchFilter = data?.filter((pokemons) => pokemons.name.toLowerCase().includes(handleChangeInput.toLowerCase()))
 
-    const teste2 =  filterPokemons?.map( (data) => {
+    const arrayOfScearchFilter =  scearchFilter?.map( (data) => {
       if( selectChangeInput !== 'All'){
         if(data.types.map( types => types.type.name).includes(selectChangeInput.toLowerCase())){
           return data
@@ -28,7 +28,7 @@ export default function Home() {
       } 
     })
 
-    const arrayFiltrado:PokemonsProps[] = teste2?.filter( elemento => elemento !== undefined)
+    const filteredPokemons = arrayOfScearchFilter?.filter( elemento => elemento !== undefined) as PokemonsProps[]
     
 
   return (
@@ -40,7 +40,7 @@ export default function Home() {
             <h1 className="text-xl mt-5">Carregando...</h1>
           </div>}
           { 
-          arrayFiltrado?.map( poke => {
+          filteredPokemons?.map( poke => {
             return(
               <PokemonCard key={poke.id} {...poke} image={poke.sprites.front_default}/>
             )})}
