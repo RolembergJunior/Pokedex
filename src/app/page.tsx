@@ -9,27 +9,40 @@ import { PokemonsProps } from "@/types/pokemonProp";
 
 export default function Home() {
   const [handleChangeInput, setHandleChangeInput] = useState('');
+  const [selectChangeInput, setSelectChangeInput] = useState<string>('All')
   const { data, isFetching} = useQuery<PokemonsProps[]>({
     queryKey:['pokemons'],
     queryFn: () => getPokemons(),
-    // suspense: true,
     staleTime: 5 * 6000
   })
 
-  const filterPokemons = data?.filter((pokemons) => pokemons.name.toLowerCase().includes(handleChangeInput.toLowerCase()))
+    const filterPokemons = data?.filter((pokemons) => pokemons.name.toLowerCase().includes(handleChangeInput.toLowerCase()))
+
+    const teste2 =  filterPokemons?.map( (data) => {
+      if( selectChangeInput !== 'All'){
+        if(data.types.map( types => types.type.name).includes(selectChangeInput.toLowerCase())){
+          return data
+        }
+      } else {
+        return data
+      } 
+    })
+
+    const arrayFiltrado:PokemonsProps[] = teste2?.filter( elemento => elemento !== undefined)
+    
 
   return (
     <>
-      <Header setChange={setHandleChangeInput} changeValue={handleChangeInput} dataPokemons={data}/>
-      <div className="flex flex-wrap justify-center gap-4 text-center mt-8">
-          {isFetching && <p>Carregando...</p>}
+      <Header setChange={setHandleChangeInput} changeValue={handleChangeInput} setSelectChangeInput={setSelectChangeInput}/>
+      <div className="relative flex flex-wrap justify-center gap-4 text-center mt-8">
+          {isFetching && 
+          <div className="absolute bg-slate-300 top-64 h-[80px] w-[100%]">
+            <h1 className="text-xl mt-5">Carregando...</h1>
+          </div>}
           { 
-          filterPokemons?.map( poke => {
-
-            const getType = poke.types[0].type
-
+          arrayFiltrado?.map( poke => {
             return(
-              <PokemonCard key={poke.id} id={poke.id} order={poke.order} name={poke.name} image={poke.sprites.front_default} type={getType.name} height={poke.height} weight={poke.weight}/>
+              <PokemonCard key={poke.id} {...poke} image={poke.sprites.front_default}/>
             )})}
       </div>
     </>

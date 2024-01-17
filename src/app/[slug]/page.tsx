@@ -6,9 +6,26 @@ import axios from "axios";
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react";
 
+interface AboutPokemonType extends PokemonsProps{
+    abilities:[{ability:{name:string}}],
+    base_experience: number,
+}
+
+interface PokemonTypes{
+    [key: string]: string;
+    grass: string,
+    fire: string,
+    water: string,
+    normal: string,
+    poison: string,
+    ground: string,
+    electric: string,
+    fairy: string,
+    bug: string,
+}
 
 export default function Pokemons(){
-    const [aboutPokemon, setAboutPokemon] = useState<PokemonsProps>()
+    const [aboutPokemon, setAboutPokemon] = useState<AboutPokemonType>()
     const params = useParams<{ slug: string }>();
 
     useEffect(() =>{
@@ -17,11 +34,8 @@ export default function Pokemons(){
 
         
             setAboutPokemon(response.data)
-
-            return console.log(response.data, '??????')
         }
         getPropsPokemon()
-        console.log(params)
     },[])
 
     const cardStyle = {
@@ -34,33 +48,25 @@ export default function Pokemons(){
         background: 'green'
     }
 
-    if(aboutPokemon?.types[0].type.name === 'grass'){
-        cardStyle.borderColor = 'green'
-        backgroundColor.background = 'green'
-    } else if(aboutPokemon?.types[0].type.name === 'fire'){
-        cardStyle.borderColor = 'red'
-        backgroundColor.background = 'red'
-    } else if(aboutPokemon?.types[0].type.name === 'water'){
-        cardStyle.borderColor = 'blue'
-        backgroundColor.background = 'blue'
-    } else if(aboutPokemon?.types[0].type.name === 'normal'){
-        cardStyle.borderColor = 'orange'
-        backgroundColor.background = 'orange'
-    } else if(aboutPokemon?.types[0].type.name === 'poison'){
-        cardStyle.borderColor = 'purple'
-        backgroundColor.background = 'purple'
-    } else if(aboutPokemon?.types[0].type.name === 'ground'){
-        cardStyle.borderColor = 'brown'
-        backgroundColor.background = 'brown'
-    } else if(aboutPokemon?.types[0].type.name === 'electric'){
-        cardStyle.borderColor = 'yellow'
-        backgroundColor.background = 'yellow'
-    } else if(aboutPokemon?.types[0].type.name === 'fairy'){
-        cardStyle.borderColor = 'pink'
-        backgroundColor.background = 'pink'
-    } else if(aboutPokemon?.types[0].type.name === 'bug'){
-        cardStyle.borderColor = 'gray'
-        backgroundColor.background = 'gray'
+    const types: PokemonTypes = {
+        grass: 'green',
+        fire: 'red',
+        water: 'blue',
+        normal: 'orange',
+        poison: 'purple',
+        ground: 'brown',
+        electric: 'yellow',
+        fairy: 'pink',
+        bug: 'gray',
+      };
+
+    const firstType = aboutPokemon?.types[0].type.name as string
+
+    const typeName = types[firstType] as string
+
+    if( firstType in types ){
+        backgroundColor.background = typeName
+        cardStyle.borderColor = typeName
     }
 
     return (
