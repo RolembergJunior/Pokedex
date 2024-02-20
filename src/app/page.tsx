@@ -72,7 +72,7 @@ export default function Home() {
   return (
     <div className={`${isDark ? 'dark' : ''}`}>
       <div className="dark:bg-slate-200 h-screen">
-        <Header title="Pokemons">
+        <Header>
           <div className="flex items-center gap-5">
             <div onClick={() => setIsActiveScearch(true)}>
               {!isActiveScearch ? (

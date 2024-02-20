@@ -1,14 +1,10 @@
-import { ChangeEvent, PropsWithChildren, ReactNode, useState } from "react";
-import { usePathname, useRouter } from "next/navigation"; 
-import { HiMagnifyingGlass } from "react-icons/hi2";
-import { IoMdArrowBack } from "react-icons/io";
+import { ReactNode } from "react";
 
 interface PropsHeader{
-    children: ReactNode,
-    title: string
+    children: ReactNode
 }
 
-export default function Header({ children, title }:PropsHeader){
+export default function Header({ children }:PropsHeader){
 
     return(
         <header className="realative flex  bg-black items-center w-full">

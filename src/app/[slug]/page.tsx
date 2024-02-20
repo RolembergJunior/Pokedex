@@ -1,12 +1,11 @@
 'use client'
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/components/Header";
 import axios from "axios";
 import { PokemonsProps } from "@/types/pokemonProp";
 import { motion } from "framer-motion";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import { IoMdArrowBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
@@ -41,9 +40,10 @@ export default function Pokemons(){
         async function getPropsPokemon() {
             const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${params.slug}/`);
 
-            setDataPokemon(response.data)
+
+            setDataPokemon(response.data);
         }
-        getPropsPokemon()
+        getPropsPokemon();
     },[]);
 
 
@@ -56,9 +56,9 @@ export default function Pokemons(){
       useEffect(() =>{
         if(sessionStorage.getItem("isDark")){
           const isDarkMode = sessionStorage.getItem("isDark");
-          setIsDark(isDarkMode === 'true' ? true : false)
+          setIsDark(isDarkMode === 'true' ? true : false);
         }
-      },[setIsDark]);
+      },[isDark]);
 
 
 
@@ -96,7 +96,7 @@ export default function Pokemons(){
     return (
         <div className={`dark:bg-slate-200 ${isDark ? 'dark' : ''}`}>
             <div className="dark:bg-slate-200 h-screen">
-                <Header title="Sobre">
+                <Header>
                     <div onClick={() => router.push('/')} className="cursor-pointer">
                         <IoMdArrowBack size={30} className="absolute mt-6 top-16 left-4 text-white dark:text-black" />
                     </div> 
